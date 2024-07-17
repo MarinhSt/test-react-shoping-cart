@@ -3,21 +3,44 @@ import './App.css'
 import { products } from './mocks/mocked-products.json'
 
 function App() {
-    const [showFilter,setShowFilter]= useState(false)
+    const [showFilter, setShowFilter] = useState(false)
+    const [filterBy, setFilterBy] = useState('All')
     const productsCategories = [
         ...new Set(products.map(product => product.category)),
     ]
+
+    const filterProducts = () => {
+        if (filterBy === 'All') {
+            return [...products]
+        } else {
+            return products.filter(product => product.category === filterBy)
+        }
+    }
+    const filteredProducts = filterProducts()
     return (
         <>
             <header>
                 <h1>D-ecommerce</h1>
                 <section>
-                    <button onClick={()=>setShowFilter(!showFilter)}>Fitler by</button>
-                    {showFilter&&<ul>
-                        {productsCategories.map((category, index) => (
-                            <li key={index}>{category}</li>
-                        ))}
-                    </ul>}
+                    <button onClick={() => setShowFilter(!showFilter)}>
+                        Fitler by
+                    </button>
+                    {showFilter && (
+                        <div>
+                            <h2>Categories</h2>
+                            <select
+                                onChange={e => {
+                                    setFilterBy(e.target.value)
+                                }}
+                                value={filterBy}
+                            >
+                                <option>All</option>
+                                {productsCategories.map((category, index) => (
+                                    <option key={index}>{category}</option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
                 </section>
             </header>
             <main>
@@ -30,7 +53,7 @@ function App() {
                         gap: '20px 10px',
                     }}
                 >
-                    {products.map(product => (
+                    {filteredProducts.map(product => (
                         <li
                             key={product.id}
                             style={{

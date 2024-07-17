@@ -2,10 +2,20 @@ import './App.css'
 import { products } from './mocks/mocked-products.json'
 
 function App() {
+    const productsCategories = [
+        ...new Set(products.map(product => product.category)),
+    ]
     return (
         <>
             <header>
                 <h1>D-ecommerce</h1>
+                <section>
+                    <ul>
+                        {productsCategories.map((category, index) => (
+                            <li key={index}>{category}</li>
+                        ))}
+                    </ul>
+                </section>
             </header>
             <main>
                 <ul
@@ -15,7 +25,6 @@ function App() {
                         flexWrap: 'wrap',
                         justifyContent: 'center',
                         gap: '20px 10px',
-                        
                     }}
                 >
                     {products.map(product => (
@@ -26,7 +35,7 @@ function App() {
                                 display: 'flex',
                                 flexDirection: 'column',
                                 justifyContent: 'space-between',
-                                boxShadow:'#6596f1a3 0px 0px 12px 0px'
+                                boxShadow: '#6596f1a3 0px 0px 12px 0px',
                             }}
                         >
                             <img src={product.thumbnail} />

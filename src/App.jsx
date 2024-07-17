@@ -4,17 +4,23 @@ import { products } from './mocks/mocked-products.json'
 
 function App() {
     const [showFilter, setShowFilter] = useState(false)
-    const [filterBy, setFilterBy] = useState('All')
+    const [filterBy, setFilterBy] = useState({
+        category: 'All',
+        from: 0,
+        to: 9999.99,
+    })
     const productsCategories = [
         ...new Set(products.map(product => product.category)),
     ]
 
     const filterProducts = () => {
-        if (filterBy === 'All') {
-            return [...products]
-        } else {
-            return products.filter(product => product.category === filterBy)
-        }
+        return products.filter(({ category, price }) => {
+            return (
+                price >= filterBy.from &&
+                price <= filterBy.to &&
+                (filterBy.category === 'All' || category === filterBy.category)
+            )
+        })
     }
     const filteredProducts = filterProducts()
     return (
@@ -26,20 +32,56 @@ function App() {
                         Fitler by
                     </button>
                     {showFilter && (
-                        <div>
-                            <h2>Categories</h2>
-                            <select
-                                onChange={e => {
-                                    setFilterBy(e.target.value)
-                                }}
-                                value={filterBy}
-                            >
-                                <option>All</option>
-                                {productsCategories.map((category, index) => (
-                                    <option key={index}>{category}</option>
-                                ))}
-                            </select>
-                        </div>
+                        <>
+                            <div>
+                                <h2>Categories</h2>
+                                <select
+                                    onChange={e => {
+                                        setFilterBy({
+                                            ...filterBy,
+                                            category: e.target.value,
+                                        })
+                                    }}
+                                    value={filterBy}
+                                >
+                                    <option>All</option>
+                                    {productsCategories.map(
+                                        (category, index) => (
+                                            <option key={index}>
+                                                {category}
+                                            </option>
+                                        )
+                                    )}
+                                </select>
+                            </div>
+                            <div>
+                                <h2>Price range</h2>
+                                <label htmlFor="priceFrom">From</label>
+                                <input
+                                    id="priceFrom"
+                                    type="number"
+                                    onChange={e =>
+                                        setFilterBy({
+                                            ...filterBy,
+                                            from: e.target.value,
+                                        })
+                                    }
+                                    value={filterBy.from}
+                                />
+                                <label htmlFor="priceTo">To</label>
+                                <input
+                                    id="priceTo"
+                                    type="number"
+                                    onChange={e =>
+                                        setFilterBy({
+                                            ...filterBy,
+                                            to: e.target.value,
+                                        })
+                                    }
+                                    value={filterBy.to}
+                                />
+                            </div>
+                        </>
                     )}
                 </section>
             </header>

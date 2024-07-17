@@ -3,8 +3,8 @@
 Ecommerce
 
 - [x] Show a list of products from a JSON
--  Add a filter by category
--  Add a filter by price
+- [x] Add a filter by category
+- [x] Add a filter by price
 
 Use useContext to avoid passing unnecessary props.
 

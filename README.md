@@ -2,7 +2,7 @@
 
 Ecommerce
 
--  Show a list of products from a JSON
+- [x] Show a list of products from a JSON
 -  Add a filter by category
 -  Add a filter by price
 

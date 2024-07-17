@@ -1,37 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { products } from './mocks/mocked-products.json'
 
 function App() {
-    const [count, setCount] = useState(0)
-
     return (
         <>
-            <div>
-                <a href="https://vitejs.dev" target="_blank">
-                    <img src={viteLogo} className="logo" alt="Vite logo" />
-                </a>
-                <a href="https://react.dev" target="_blank">
-                    <img
-                        src={reactLogo}
-                        className="logo react"
-                        alt="React logo"
-                    />
-                </a>
-            </div>
-            <h1>Vite + React</h1>
-            <div className="card">
-                <button onClick={() => setCount(count => count + 1)}>
-                    count is {count}
-                </button>
-                <p>
-                    Edit <code>src/App.jsx</code> and save to test HMR
-                </p>
-            </div>
-            <p className="read-the-docs">
-                Click on the Vite and React logos to learn more
-            </p>
+            <header>
+                <h1>D-ecommerce</h1>
+            </header>
+            <main>
+                <ul
+                    
+                >
+                    {products.map(product => (
+                        <li
+                            
+                            key={product.id}
+                        >
+                            <img
+                                src={product.thumbnail}
+                            />
+                            <h3>{product.title}</h3>
+                            <p>{product.description}</p>
+                            <span>
+                                <b>PRICE: $</b>
+                                {product.price}
+                            </span>
+                        </li>
+                    ))}
+                </ul>
+            </main>
         </>
     )
 }

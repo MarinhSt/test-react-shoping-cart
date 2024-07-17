@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import './App.css'
 import { products } from './mocks/mocked-products.json'
 
 function App() {
+    const [showFilter,setShowFilter]= useState(false)
     const productsCategories = [
         ...new Set(products.map(product => product.category)),
     ]
@@ -10,11 +12,12 @@ function App() {
             <header>
                 <h1>D-ecommerce</h1>
                 <section>
-                    <ul>
+                    <button onClick={()=>setShowFilter(!showFilter)}>Fitler by</button>
+                    {showFilter&&<ul>
                         {productsCategories.map((category, index) => (
                             <li key={index}>{category}</li>
                         ))}
-                    </ul>
+                    </ul>}
                 </section>
             </header>
             <main>

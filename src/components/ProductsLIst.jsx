@@ -1,4 +1,8 @@
-export function ProductsLIst({ filteredProducts = [] }) {
+import { useFilters } from '../hooks/useFilters'
+import { products } from '../mocks/mocked-products.json'
+export function ProductsLIst() {
+    const {filterProducts} = useFilters()
+    const filteredProducts = filterProducts(products)
     return (
         <ul
             style={{

@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import { useFilters } from '../hooks/useFilters'
 
-export default function Filters({ productsCategories, filterBy, setFilterBy }) {
+export default function Filters() {
     const [showFilter, setShowFilter] = useState(false)
+    const { productsCategories, filterBy, setFilterBy }= useFilters()
 
     return (
         <section style={{ marginBottom: '40px' }}>

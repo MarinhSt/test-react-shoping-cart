@@ -9,7 +9,7 @@ export function FilterProvider({ children }) {
         to: 9999.99,
     })
     return (
-        <FilterContext.Provider value={(filterBy, setFilterBy)}>
+        <FilterContext.Provider value={{filterBy, setFilterBy}}>
             {children}
         </FilterContext.Provider>
     )

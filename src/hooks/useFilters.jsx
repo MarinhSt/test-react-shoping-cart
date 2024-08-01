@@ -1,12 +1,9 @@
-import { useState } from "react"
+import { useContext } from "react"
 import { products } from '../mocks/mocked-products.json'
+import { FilterContext } from "../context/filters"
 
 export function useFilters() {
-    const [filterBy, setFilterBy] = useState({
-        category: 'All',
-        from: 0,
-        to: 9999.99,
-    })
+    const {filterBy, setFilterBy} = useContext(FilterContext)
 
     const productsCategories = [
         ...new Set(products.map(product => product.category)),

@@ -6,7 +6,7 @@ Ecommerce
 - [x] Add a filter by category
 - [x] Add a filter by price
 
-Use useContext to avoid passing unnecessary props.
+- [x] Use useContext to avoid passing unnecessary props.
 
 Shopping cart:
 

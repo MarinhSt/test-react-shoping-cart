@@ -1,7 +1,7 @@
 import { useFilters } from '../hooks/useFilters'
 import { products } from '../mocks/mocked-products.json'
 export function ProductsLIst() {
-    const {filterProducts} = useFilters()
+    const { filterProducts } = useFilters()
     const filteredProducts = filterProducts(products)
     return (
         <ul
@@ -26,11 +26,19 @@ export function ProductsLIst() {
                 >
                     <img src={product.thumbnail} />
                     <h3>{product.title}</h3>
-                    <p>{product.description}</p>
                     <span>
                         <b>PRICE: $</b>
                         {product.price}
                     </span>
+                    <button
+                        style={{
+                            width: 'fit-content',
+                            alignSelf: 'center',
+                            margin: '10px',
+                        }}
+                    >
+                        add to cart
+                    </button>
                 </li>
             ))}
         </ul>

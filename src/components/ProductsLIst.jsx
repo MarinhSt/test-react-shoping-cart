@@ -1,8 +1,20 @@
+import { useContext } from 'react'
 import { useFilters } from '../hooks/useFilters'
 import { products } from '../mocks/mocked-products.json'
+import { CartContext } from '../context/cart'
 export function ProductsLIst() {
     const { filterProducts } = useFilters()
     const filteredProducts = filterProducts(products)
+    const { addedToCart, setAddedToCart } = useContext(CartContext)
+    const addToCart = product => {
+        const { id, thumbnail, title, price } = product
+        const newProduct = { id, thumbnail, title, price, quantity: 1 }
+        if (!addedToCart) {
+            setAddedToCart([...newProduct])
+        } else {
+            setAddedToCart([...addedToCart, newProduct])
+        }
+    }
     return (
         <ul
             style={{
@@ -36,6 +48,7 @@ export function ProductsLIst() {
                             alignSelf: 'center',
                             margin: '10px',
                         }}
+                        onClick={() => addToCart(product)}
                     >
                         add to cart
                     </button>

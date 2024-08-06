@@ -10,7 +10,7 @@ Ecommerce
 
 Shopping cart:
 
--  Allow products to be added to a cart.
+- [x] Allow products to be added to a cart.
 -  Allow products to be removed from the cart.
 -  Allow to change the quantity of products in the cart.
 -  Synchronize changes in the shopping cart with the product list.

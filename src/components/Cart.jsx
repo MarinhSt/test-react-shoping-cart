@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import  {CartContext}  from '../context/cart'
 
 export default function Cart() {
     const [openedCart, setOpenedCart] = useState(false)
+    const {addedToCart, setAddedToCart}  = useContext(CartContext)
     return (
         <>
             <button
@@ -22,10 +24,13 @@ export default function Cart() {
                     position: 'fixed',
                     top: '0',
                     right: '0',
+                    bottom: '0',
                     backgroundColor: 'black',
                     height: '100vh',
                     width: '400px',
-                    padding: '10px',
+                    padding: '0 10px',
+                    margin: '0px',
+                    overflow: 'auto',
                 }}
             >
                 <header>
@@ -41,10 +46,10 @@ export default function Cart() {
                             flexDirection: 'column',
                             gap: '10px',
                             padding: 0,
-                            margin: '40px 0',
+                            margin: '20px 0',
                         }}
-                    >
-                        <li
+                    >{addedToCart && addedToCart.map(product =>(
+                        <li key={product.id}
                             style={{
                                 display: 'flex',
                                 gap: '10px',
@@ -55,14 +60,14 @@ export default function Cart() {
                         >
                             <img
                                 style={{ height: '140px' }}
-                                src="https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png"
+                                src={product.thumbnail}
                             />
 
                             <div>
                                 <h4 title="Masacra ">
-                                    Essence Mascara Lash Princess{' '}
+                                    {product.title}
                                 </h4>
-                                <p> $40.99</p>
+                                <p> ${product.price}</p>
                                 <footer>
                                     <small>Qty: 1 </small>
                                     <button style={{ padding: '6px' }}>
@@ -77,48 +82,16 @@ export default function Cart() {
                                     height: 'fit-content',
                                     alignSelf: 'center',
                                 }}
+                                onClick={()=>console.log('deleted product')}
                             >
                                 X
                             </button>
                         </li>
-
-                        <div
-                            style={{
-                                display: 'flex',
-                                gap: '10px',
-                                backgroundColor: 'rgb(12 12 12)',
-                                justifyContent: 'space-between',
-                                padding: '10px',
-                            }}
-                        >
-                            <img
-                                style={{ height: '140px' }}
-                                src="https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/thumbnail.png"
-                            />
-                            <div>
-                                <h4>Eyeshadow Palette with Mirror</h4>
-                                <p>$19.99</p>
-                                <footer>
-                                    <small>Qty: 1 </small>
-                                    <button style={{ padding: '6px' }}>
-                                        +
-                                    </button>
-                                </footer>
-                            </div>
-
-                            <button
-                                style={{
-                                    backgroundColor: 'red',
-                                    height: 'fit-content',
-                                    alignSelf: 'center',
-                                }}
-                            >
-                                X
-                            </button>
-                        </div>
+                    ))
+                    }
                     </ul>
                 </main>
-                <footer style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+                <footer style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginBottom: '20px' }}>
                     <button style={{ backgroundColor: 'green' }}>
                         checkout
                     </button>

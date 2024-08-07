@@ -4,6 +4,9 @@ import  {CartContext}  from '../context/cart'
 export default function Cart() {
     const [openedCart, setOpenedCart] = useState(false)
     const {addedToCart, setAddedToCart}  = useContext(CartContext)
+    const deleteProduct =(index)=>{
+        setAddedToCart(addedToCart.toSpliced(index, 1))
+    }
     return (
         <>
             <button
@@ -48,7 +51,7 @@ export default function Cart() {
                             padding: 0,
                             margin: '20px 0',
                         }}
-                    >{addedToCart && addedToCart.map(product =>(
+                    >{addedToCart && addedToCart.map((product,index) =>(
                         <li key={product.id}
                             style={{
                                 display: 'flex',
@@ -82,7 +85,7 @@ export default function Cart() {
                                     height: 'fit-content',
                                     alignSelf: 'center',
                                 }}
-                                onClick={()=>console.log('deleted product')}
+                                onClick={()=>deleteProduct(index)}
                             >
                                 X
                             </button>

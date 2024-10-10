@@ -1,12 +1,35 @@
 import { useContext, useState } from 'react'
-import  {CartContext}  from '../context/cart'
+import { CartContext } from '../context/cart'
 
 export default function Cart() {
     const [openedCart, setOpenedCart] = useState(false)
-    const {addedToCart, setAddedToCart}  = useContext(CartContext)
-    const deleteProduct =(index)=>{
+    const { addedToCart, setAddedToCart } = useContext(CartContext)
+    const deleteProduct = index => {
         setAddedToCart(addedToCart.toSpliced(index, 1))
     }
+    const updateQty = (e, id) => {
+        const newQty = Number(e.target.value)
+        const newCart = addedToCart.map(product => {
+            if (product.id == id) product.quantity = newQty
+            return product
+        })
+
+        console.log(addedToCart)
+        setAddedToCart([...newCart])
+    }
+
+    const showStock = product => {
+        const unitsAvailable = []
+        for (let i = 0; i < product.stock; i++) {
+            unitsAvailable.push(
+                <option key={i} value={i + 1}>
+                    {i + 1}
+                </option>
+            )
+        }
+        return unitsAvailable
+    }
+
     return (
         <>
             <button
@@ -51,50 +74,65 @@ export default function Cart() {
                             padding: 0,
                             margin: '20px 0',
                         }}
-                    >{addedToCart && addedToCart.map((product,index) =>(
-                        <li key={product.id}
-                            style={{
-                                display: 'flex',
-                                gap: '10px',
-                                backgroundColor: 'rgb(12 12 12)',
-                                padding: '10px',
-                                justifyContent: 'space-between',
-                            }}
-                        >
-                            <img
-                                style={{ height: '140px' }}
-                                src={product.thumbnail}
-                            />
-
-                            <div>
-                                <h4 title="Masacra ">
-                                    {product.title}
-                                </h4>
-                                <p> ${product.price}</p>
-                                <footer>
-                                    <small>Qty: 1 </small>
-                                    <button style={{ padding: '6px' }}>
-                                        +
+                    >
+                        {addedToCart &&
+                            addedToCart.map((product, index) => (
+                                <li
+                                    key={product.id}
+                                    style={{
+                                        display: 'flex',
+                                        gap: '10px',
+                                        backgroundColor: 'rgb(12 12 12)',
+                                        padding: '10px',
+                                        justifyContent: 'space-between',
+                                    }}
+                                >
+                                    <img
+                                        style={{ height: '140px' }}
+                                        src={product.thumbnail}
+                                    />
+                                    <div>
+                                        <h4 title="Masacra ">
+                                            {product.title}
+                                        </h4>
+                                        <p> ${product.price}</p>
+                                        <footer>
+                                            <small>
+                                                Qty:{' '}
+                                                <select
+                                                    value={product.quantity}
+                                                    onChange={e =>
+                                                        updateQty(e, product.id)
+                                                    }
+                                                    style={{ height: '20px' }}
+                                                >
+                                                    {showStock(product)}
+                                                </select>
+                                            </small>
+                                        </footer>
+                                    </div>
+                                    <button
+                                        style={{
+                                            backgroundColor: 'red',
+                                            height: 'fit-content',
+                                            alignSelf: 'center',
+                                        }}
+                                        onClick={() => deleteProduct(index)}
+                                    >
+                                        X
                                     </button>
-                                </footer>
-                            </div>
-
-                            <button
-                                style={{
-                                    backgroundColor: 'red',
-                                    height: 'fit-content',
-                                    alignSelf: 'center',
-                                }}
-                                onClick={()=>deleteProduct(index)}
-                            >
-                                X
-                            </button>
-                        </li>
-                    ))
-                    }
+                                </li>
+                            ))}
                     </ul>
                 </main>
-                <footer style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginBottom: '20px' }}>
+                <footer
+                    style={{
+                        display: 'flex',
+                        gap: '10px',
+                        justifyContent: 'center',
+                        marginBottom: '20px',
+                    }}
+                >
                     <button style={{ backgroundColor: 'green' }}>
                         checkout
                     </button>
